@@ -30,8 +30,10 @@ angular.module('myApp')
 .run(function ($rootScope, $location, $route, AuthService) {
   //What is this run thing?
   $rootScope.$on('$routeChangeStart', function(event, next, current){
+    console.log('route change')
     AuthService.getUserStatus();
-    if(next.access.restricted && !AuthService.isLoggedIn()){
+    if(next.access.restricted && AuthService.isLoggedIn() === false){
+      console.log('here')
       $location.path('/login')
       $route.reload();/**telling the router there has been a change**/
     }
